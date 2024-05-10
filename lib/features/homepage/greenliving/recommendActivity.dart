@@ -4,8 +4,9 @@ import 'package:http/http.dart' as http;
 
 class RecomActivity extends StatelessWidget {
   static const routename = '/recomactivity';
+  List<Map<String,dynamic>> responseList = [];
 
-  const RecomActivity({super.key});
+  RecomActivity({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +80,6 @@ class _recommenditemViewState extends State<recommenditemView> {
       recommendations += "날씨 좋은 날 할 수 있는 일,";
     }
 
-    recommendations += "와 관련해서 할 수 있는 환경보호활동을 구체적으로 추천해줘.";
 
     return recommendations;
   }
@@ -99,7 +99,10 @@ class _recommenditemViewState extends State<recommenditemView> {
 
 
     var decodedData = utf8.decode(response.bodyBytes);
-    print(decodedData);
+    Map<String, dynamic> data = jsonDecode(decodedData);
+    List<String> valueList = data['value'].cast<String>();
+    print(valueList[0]);
+
 
     if (response.statusCode == 200) {
       print('Recommendations sent successfully!');
@@ -109,20 +112,7 @@ class _recommenditemViewState extends State<recommenditemView> {
     }
   }
 
-  Future<void> getguideline() async {
-    String url = 'http://172.21.119.167:8000/guideline';
-    print(url);
-    var response = await http.get(Uri.parse(url));
-    var decodedData = utf8.decode(response.bodyBytes);
-    print(decodedData);
 
-    if (response.statusCode == 200) {
-      print('Recommendations sent successfully!');
-    } else {
-      print(
-          'Failed to send recommendations. Error code: ${response.statusCode}');
-    }
-  }
 
 
   @override
@@ -134,7 +124,7 @@ class _recommenditemViewState extends State<recommenditemView> {
           Container(
             decoration: BoxDecoration(
                 border: Border(bottom: BorderSide(color: Color(0xFF284738)))),
-            child: Text("마음에 드는 것을 골라주세요", style: TextStyle(
+            child: Text("마음에 드는 활동유형을 골라주세요.", style: TextStyle(
               color: Color(0xff284738),
               fontSize: 18,
               fontWeight: FontWeight.w800,
@@ -186,7 +176,7 @@ class _recommenditemViewState extends State<recommenditemView> {
                 );
               },
               child: Text(
-                '저장',
+                '추천받기',
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w800,

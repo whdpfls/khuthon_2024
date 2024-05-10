@@ -17,10 +17,10 @@ class _AnimalManypageState extends State<AnimalManypage> {
 
   // 예시 데이터: 동물 정보
   List<Animal> animals = [
-    Animal(name: "no.001 고양이", image: "assets/animals/cat.gif"),
-    Animal(name: "no.002 홍학", image: "assets/animals/redbird.gif"),
-    Animal(name: "no.003 돼지", image: "assets/animals/pig.png"),
-    Animal(name: "no.004 렛서판다", image: "assets/animals/redpanda.png"),
+    Animal(name: "no.001 가오리", image: "assets/animals/가오리-removebg-preview.png"),
+    Animal(name: "no.002 거북이", image: "assets/animals/거북이-removebg-preview.pngf"),
+    Animal(name: "no.003 검은토끼", image: "assets/animals/검은토끼-removebg-preview.png"),
+    Animal(name: "no.004 돼지", image: "assets/animals/돼지-removebg-preview.png"),
     Animal(name:"no.005 ????", image:"assets/animals/question.gif"),
     Animal(name:"no.006 ????", image:"assets/animals/question.gif"),
     Animal(name:"no.007 ????", image:"assets/animals/question.gif"),
