@@ -82,7 +82,7 @@ async def login(sign_in: SignIn, res: Response):
 # /login/fake
 @router.get("/fake")
 async def login(res: Response):
-    expire_time = datetime.utcnow() + timedelta(minutes=30)
+    expire_time = datetime.utcnow() + timedelta(minutes=300)
     expire_time = expire_time.strftime("%a, %d %b %Y %H:%M:%S GMT")
     
     res = JSONResponse(status_code=200, content={

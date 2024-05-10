@@ -7,3 +7,10 @@ class GeneralModel(BaseModel):
 class GeneralModelVer2(BaseModel):
     type: str
     value: str
+    
+class GeneralModelVer3(BaseModel):
+    type: str
+    value: bytes
+
+
+
