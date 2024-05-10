@@ -1,14 +1,22 @@
+<<<<<<< HEAD
 from fastapi import APIRouter, Request
 from fastapi.responses import JSONResponse
+=======
+from fastapi import APIRouter, Response
+>>>>>>> 705fa18a19adbe70f19f8ddbab56445413e7287a
 
 import sys
 sys.path.append('../')
 import database.queries as q
+<<<<<<< HEAD
 from models.animalcatalog_models import AnimalPost
+=======
+>>>>>>> 705fa18a19adbe70f19f8ddbab56445413e7287a
 
 # 라우터 객체
 router = APIRouter(prefix="/animalcatalog")
 
+<<<<<<< HEAD
 @router.get("")
 async def animalcatalog_get(req: Request):
     cookies = req.cookies 
@@ -74,4 +82,9 @@ async def animalcatalog_post(req:Request, data:AnimalPost):
                     "catalog": data[5]
                 }
             })
+=======
+
+
+
+>>>>>>> 705fa18a19adbe70f19f8ddbab56445413e7287a
 
