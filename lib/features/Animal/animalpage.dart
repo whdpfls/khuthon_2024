@@ -72,7 +72,7 @@ class _AnimalpageState extends State<Animalpage> {
             Padding(
               padding: EdgeInsets.all(15.0),
               child:  LinearPercentIndicator(
-                width: 320.0,
+                width: 30.0,
                 lineHeight: 14.0,
                 percent: 0.0,
                 center: Text(

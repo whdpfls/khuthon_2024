@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 class RecomActivity extends StatelessWidget {
   static const routename = '/recomactivity';
-  List<Map<String,dynamic>> responseList = [];
+
 
   RecomActivity({super.key});
 
@@ -35,9 +35,8 @@ class RecomActivity extends StatelessWidget {
     );
   }
 }
-
 class recommenditemView extends StatefulWidget {
-  const recommenditemView({super.key});
+  recommenditemView({super.key});
 
   @override
   State<recommenditemView> createState() => _recommenditemViewState();
@@ -51,8 +50,7 @@ class _recommenditemViewState extends State<recommenditemView> {
     "날씨와 상관 없는 일",
     "날씨 좋은날 할 수 있는 일"
   ];
-  List<bool> _isCheckedList = List.generate(
-      5, (index) => false); // 체크 여부를 저장할 리스트
+  List<bool> _isCheckedList = List.generate(5, (index) => false); // 체크 여부를 저장할 리스트
 
   String generateRecommendation() {
     List<String> selectedItems = [];
@@ -80,114 +78,132 @@ class _recommenditemViewState extends State<recommenditemView> {
       recommendations += "날씨 좋은 날 할 수 있는 일,";
     }
 
-
     return recommendations;
   }
 
+  List<String> responseList = [];
 
   Future<void> sendRecommendations(String recommendations) async {
     String url = 'http://172.21.119.167:8000/envactivity';
-    // print(recommendations.runtimeType);
-
-
-    String requestData = jsonEncode({ 'type':'string','value': recommendations});
-    var response = await http.post(Uri.parse(url),
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: requestData);
-
+    String requestData = jsonEncode({'type': 'string', 'value': recommendations});
+    var response = await http.post(Uri.parse(url), headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+    }, body: requestData);
 
     var decodedData = utf8.decode(response.bodyBytes);
     Map<String, dynamic> data = jsonDecode(decodedData);
     List<String> valueList = data['value'].cast<String>();
-    print(valueList[0]);
 
+
+    // responseList에 데이터 추가
+    setState(() {
+      responseList=[];
+      responseList.addAll(valueList);
+    });
+    print(responseList);
 
     if (response.statusCode == 200) {
       print('Recommendations sent successfully!');
     } else {
-      print(
-          'Failed to send recommendations. Error code: ${response.statusCode}');
+      print('Failed to send recommendations. Error code: ${response.statusCode}');
     }
   }
 
-
-
-
   @override
   Widget build(BuildContext context) {
+    print(responseList);
     return Center(
-      child: Column(
-        children: [
-          SizedBox(height: 20,),
-          Container(
-            decoration: BoxDecoration(
-                border: Border(bottom: BorderSide(color: Color(0xFF284738)))),
-            child: Text("마음에 드는 활동유형을 골라주세요.", style: TextStyle(
-              color: Color(0xff284738),
-              fontSize: 18,
-              fontWeight: FontWeight.w800,
-            ),),
-          ),
-          SizedBox(height: 20,),
-          Column(
-            children: [
-              for(int i = 0; i < itemList.length; i++)
-                CheckboxListTile(
-                  title: Text(itemList[i]),
-                  value: _isCheckedList[i],
-                  onChanged: (newValue) {
-                    setState(() {
-                      _isCheckedList[i] = newValue!;
-                    });
-                  },
-                ),
-            ],
-          ),
-          SizedBox(height: 300),
-          SizedBox(
-            width: 330,
-            height: 50,
-            child: ElevatedButton(
-              onPressed: () {
-                String recommendations = generateRecommendation();
-                print(recommendations);
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: Text("환경 보호 활동 추천"),
-                      content: Text(recommendations.isNotEmpty
-                          ? recommendations
-                          : "선택된 활동이 없습니다."),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            sendRecommendations(recommendations);
-                            // getguideline();
-                          },
-                          child: Text("추천"),
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(height: 20),
+            Container(
+              decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Color(0xFF284738)))),
               child: Text(
-                '추천받기',
+                "마음에 드는 활동유형을 골라주세요.",
                 style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w800,
-                    color: Colors.white),
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
+                  color: Color(0xff284738),
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800,
+                ),
               ),
             ),
-          ),
-        ],
+            SizedBox(height: 20),
+            Column(
+              children: [
+                for (int i = 0; i < itemList.length; i++)
+                  CheckboxListTile(
+                    title: Text(itemList[i]),
+                    value: _isCheckedList[i],
+                    onChanged: (newValue) {
+                      setState(() {
+                        _isCheckedList[i] = newValue!;
+                      });
+                    },
+                  ),
+              ],
+            ),
+            SizedBox(height: 40),
+            SizedBox(
+              width: 330,
+              height: 50,
+              child: ElevatedButton(
+                onPressed: () {
+                  String recommendations = generateRecommendation();
+                  print(recommendations);
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text("환경 보호 활동 추천"),
+                        content: Text(recommendations.isNotEmpty ? recommendations : "선택된 활동이 없습니다."),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              sendRecommendations(recommendations);
+                              setState(() {
+                                // 화면 갱신
+                                _isCheckedList = List.generate(5, (index) => false);
+                              });
+                            },
+                            child: Text("추천"),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                child: Text(
+                  '추천받기',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: Colors.white),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
+            // responseList가 비어있지 않으면 보여줌
+            if (responseList.isNotEmpty) ...[
+              
+              Container(
+                decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Color(0xFF284738)))),
+                child: Text(
+                  "오늘의 추천 활동 5가지",
+                  style: TextStyle(
+                    color: Color(0xff284738),
+                    fontSize: 18,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+              ),
+              for (var item in responseList)...[
+                CheckboxListTile(title: Text(item), value: false, onChanged: null),
+              ]
+            ],
+          ],
+        ),
       ),
     );
   }

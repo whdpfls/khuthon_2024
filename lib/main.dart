@@ -4,6 +4,8 @@ import 'package:khuthon_2024/features/Animal/animalpage.dart';
 import 'package:khuthon_2024/features/guidepage/guidepage.dart';
 import 'package:khuthon_2024/features/homepage/homepage.dart';
 
+import 'package:http/http.dart' as http;
+
 void main() {
   runApp(MyApp());
 }
@@ -11,7 +13,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
+    return  MaterialApp.router(
       routerConfig: router,
       title: 'Flutter Homepage',
       theme: ThemeData(
@@ -37,6 +39,30 @@ class _MyHomePageState extends State<MyHomePage> {
     Homepage(),
     Animalpage(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    sendGetRequest(); // 앱 시작 시 GET 요청 보내기
+  }
+
+  Future<void> sendGetRequest() async {
+    final url = 'http://172.21.119.167:8000/login/fake'; // GET 요청을 보낼 URL
+
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        // 성공적으로 GET 요청을 보낸 경우
+        print('GET 요청 성공: ${response.body}');
+      } else {
+        // GET 요청을 보내지 못한 경우
+        print('GET 요청 실패: ${response.statusCode}');
+      }
+    } catch (e) {
+      // GET 요청을 보낼 때 오류가 발생한 경우
+      print('GET 요청 오류: $e');
+    }
+  }
 
   void _onItemTapped(int index) {
     setState(() {

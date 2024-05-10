@@ -1,31 +1,36 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:khuthon_2024/features/widget/custom_appbar.dart';
 import 'package:khuthon_2024/main.dart';
+import "package:http/http.dart" as http;
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class AnimalManypage extends StatefulWidget {
   static const routeName = "/animalmanypage";
 
-  const AnimalManypage({Key? key}) : super(key: key);
+
+  AnimalManypage({Key? key}) : super(key: key);
 
   @override
   _AnimalManypageState createState() => _AnimalManypageState();
 }
 
 class _AnimalManypageState extends State<AnimalManypage> {
+  var value;
   final String animalTitle = "멸종위기동물 도감";
 
   // 예시 데이터: 동물 정보
   List<Animal> animals = [
-    Animal(name: "no.001 가오리", image: "assets/animals/가오리-removebg-preview.png"),
-    Animal(name: "no.002 거북이", image: "assets/animals/거북이-removebg-preview.pngf"),
-    Animal(name: "no.003 검은토끼", image: "assets/animals/검은토끼-removebg-preview.png"),
-    Animal(name: "no.004 돼지", image: "assets/animals/돼지-removebg-preview.png"),
-    Animal(name:"no.005 ????", image:"assets/animals/question.gif"),
-    Animal(name:"no.006 ????", image:"assets/animals/question.gif"),
-    Animal(name:"no.007 ????", image:"assets/animals/question.gif"),
-    Animal(name:"no.008 ????", image:"assets/animals/question.gif"),
-    Animal(name:"no.009 ????", image:"assets/animals/question.gif"),
+    Animal(name: "no.001 고양이", image: "assets/animals/cat.gif"),
+    Animal(name: "no.002 홍학", image: "assets/animals/redbird.gif"),
+    Animal(name: "no.003 돼지", image: "assets/animals/pig.png"),
+    Animal(name: "no.004 렛서판다", image: "assets/animals/redpanda.png"),
+    Animal(name: "no.005 연못거북", image: "assets/animals/turtle.png"),
+    Animal(name: "no.006 수달", image: "assets/animals/soodal.gif"),
+    Animal(name: "no.007 큰부리새", image: "assets/animals/parrot.png"),
+    Animal(name: "no.008 코알라", image: "assets/animals/koala.png"),
+    Animal(name: "no.009 듀공", image: "assets/animals/dolpin.png"),
     Animal(name:"no.010 ????", image:"assets/animals/question.gif"),
     Animal(name:"no.011 ????", image:"assets/animals/question.gif"),
     Animal(name:"no.012 ????", image:"assets/animals/question.gif"),
@@ -35,16 +40,7 @@ class _AnimalManypageState extends State<AnimalManypage> {
     Animal(name:"no.016 ????", image:"assets/animals/question.gif"),
     Animal(name:"no.017 ????", image:"assets/animals/question.gif"),
     Animal(name:"no.018 ????", image:"assets/animals/question.gif"),
-    // Animal(name: "no.005 연못거북", image: "assets/animals/turtle.png"),
-    // Animal(name: "no.006 수달", image: "assets/animals/soodal.gif"),
-    // Animal(name: "no.007 큰부리새", image: "assets/animals/parrot.png"),
-    // Animal(name: "no.008 코알라", image: "assets/animals/koala.png"),
-    // Animal(name: "no.009 듀공", image: "assets/animals/dolpin.png"),
-    // Animal(name: "no.005 연못거북", image: "assets/animals/turtle.png"),
-    // Animal(name: "no.006 수달", image: "assets/animals/soodal.gif"),
-    // Animal(name: "no.007 큰부리새", image: "assets/animals/parrot.png"),
-    // Animal(name: "no.008 코알라", image: "assets/animals/koala.png"),
-    // Animal(name: "no.009 듀공", image: "assets/animals/dolpin.png"),
+
     // 여기에 나머지 동물들 추가
   ];
 
@@ -56,7 +52,29 @@ class _AnimalManypageState extends State<AnimalManypage> {
     super.initState();
     // 페이지에 들어올 때 첫 번째 동물을 선택
     selectedAnimal = animals.isNotEmpty ? animals.first : null;
+    _fetchData();
   }
+
+  Future<void> _fetchData() async {
+    String url = 'http://172.21.119.167:8000/mileleage';
+    print(url);
+    var response = await http.get(Uri.parse(url));
+    var decodedData = utf8.decode(response.bodyBytes);
+    Map<String, dynamic> data = jsonDecode(decodedData);
+
+    print(data);
+    value = data['value'];
+    print(value.toString());
+    print('Received value: $value');
+
+    if (response.statusCode == 200) {
+      print('Recommendations sent successfully!');
+    } else {
+      print(
+          'Failed to send recommendations. Error code: ${response.statusCode}');
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -88,11 +106,12 @@ class _AnimalManypageState extends State<AnimalManypage> {
                 padding: EdgeInsets.all(15.0),
                 child:  LinearPercentIndicator(
                   width: 320.0,
-                  lineHeight: 14.0,
-                  percent: 0.14,
+                  lineHeight: 19.0,
+                  percent: 0.45,
                   center: Text(
-                    "14.0%",
-                    style: TextStyle(fontSize: 12.0),
+                    "3757",
+                    style: TextStyle(fontSize: 14.0,
+                    fontWeight: FontWeight.w800),
                   ),
                   trailing: Text("70,000원", style: TextStyle(
                     fontWeight: FontWeight.w800,

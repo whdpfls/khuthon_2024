@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:khuthon_2024/features/Animal/animalManyver.dart';
 import 'package:khuthon_2024/features/homepage/convertpoint.dart';
 
 class Pointcheck extends StatelessWidget {
@@ -46,121 +47,44 @@ class _PointView extends StatefulWidget {
 class _PointViewState extends State<_PointView> {
   bool _isLoading = false;
   bool _showContent = false;
+  TextEditingController _controller = TextEditingController();
+  bool showIndicator = false;
+
+  void showMileageContainer() {
+    // 2초 후에 상태를 업데이트하고 인디케이터를 숨기고 텍스트 컨테이너를 보여줍니다.
+    Future.delayed(Duration(seconds: 2), () {
+      setState(() {
+        showIndicator = false;
+      });
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Container(
+              height: 50,
+              child: Center(
+                child: Text("마일리지 8750p 획득"),
+              ),
+            ),
+          );
+        },
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        children: [
-          SizedBox(height:30),
-          SizedBox(
-            width: 330,
-            height: 50,
-            child: ElevatedButton(
-              onPressed: () {},
-              child: Text(
-                '주거환경정보',
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w800,
-                    color: Colors.white),
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-              ),
-            ),
-          ),
-          SizedBox(height: 20,),
-          EnvInfoRow(),
-          SizedBox(height: 40,),
-          SizedBox(
-            width: 330,
-            height: 50,
-            child: ElevatedButton(
-              onPressed: () {},
-              child: Text(
-                '거주면적',
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w800,
-                    color: Colors.white),
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-              ),
-            ),
-          ),
-          SizedBox(height: 20,),
-          HomeInfoRow(),
-          SizedBox(height: 40,),
-          SizedBox(
-            width: 330,
-            height: 50,
-            child: ElevatedButton(
-              onPressed: () {},
-              child: Text(
-                '거주인원',
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w800,
-                    color: Colors.white),
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-              ),
-            ),
-          ),
-          SizedBox(height: 20,),
-          PersonInfoRow(),
-          SizedBox(height: 40,),
-          Stack(
-              alignment: Alignment.center,
-              children: [
-                SizedBox(
-                  width: 330,
-                  height: 100,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        _isLoading = true;
-                      });
-                      // 3초 후에 _isLoading을 false로 설정하여 진행 표시기를 숨깁니다.
-                      Future.delayed(Duration(seconds: 3), () {
-                        setState(() {
-                          _isLoading = false;
-                          _showContent = true;
-                        });
-                      });
-                    },
-                    child: Text(
-                      '전기/상수도/도시가스\n사용량 불러오기',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w800,
-                        color: Colors.white,
-                      ),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                    ),
-                  ),
-                ),
-                if (_isLoading)
-                  CircularProgressIndicator(), // _isLoading이 true이면 진행 표시기를 표시합니다.
-              ],
-            ),
-          SizedBox(height: 40,),
-          if(_showContent)
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
             SizedBox(
               width: 330,
               height: 50,
               child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(context,MaterialPageRoute(builder: (context)=> Convertpoint()),);
-                },
+                onPressed: () {},
                 child: Text(
-                  '예상 탄소중립실천포인트 확인',
+                  '주거환경정보',
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w800,
@@ -171,13 +95,195 @@ class _PointViewState extends State<_PointView> {
                 ),
               ),
             ),
-
-        ],
-
+            SizedBox(height: 20,),
+            EnvInfoRow(),
+            SizedBox(height: 15,),
+            SizedBox(
+              width: 330,
+              height: 50,
+              child: ElevatedButton(
+                onPressed: () {},
+                child: Text(
+                  '거주면적',
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.white),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                ),
+              ),
+            ),
+            SizedBox(height: 20,),
+            HomeInfoRow(),
+            SizedBox(height: 15,),
+            SizedBox(
+              width: 330,
+              height: 50,
+              child: ElevatedButton(
+                onPressed: () {},
+                child: Text(
+                  '거주인원',
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.white),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                ),
+              ),
+            ),
+            SizedBox(height: 20,),
+            PersonInfoRow(),
+            SizedBox(height: 15,),
+            SizedBox(
+              width: 330,
+              height: 50,
+              child: ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    _isLoading = true;
+                  });
+                  // 3초 후에 _isLoading을 false로 설정하여 진행 표시기를 숨깁니다.
+                  Future.delayed(Duration(seconds: 3), () {
+                    setState(() {
+                      _isLoading = false;
+                      _showContent = true;
+                    });
+                  });
+                },
+                child: Text(
+                  '전기/상수도/도시가스 사용량 입력',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.white,
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                ),
+              ),
+            ),
+            SizedBox(height: 20,),
+            Text("2024년도 3월 ", style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color:Color(0xff284738)),),
+            SizedBox(height: 10,),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              child: Row(
+                children: [
+                  Container(
+                    width: 80,
+                    height: 50,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        labelText: "전기",
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width:60,),
+                  Container(
+                    width: 80,
+                    height: 50,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        labelText: "수도",
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 60,),
+                  Container(
+                    width: 80,
+                    height: 50,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        labelText: "가스",
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 30,),
+            Text("2024년도 4월 ", style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color:Color(0xff284738)),),
+            SizedBox(height: 10,),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              child: Row(
+                children: [
+                  Container(
+                    width: 80,
+                    height: 50,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        labelText: "전기",
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width:60,),
+                  Container(
+                    width: 80,
+                    height: 50,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        labelText: "수도",
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 60,),
+                  Container(
+                    width: 80,
+                    height: 50,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        labelText: "가스",
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 30,),
+            SizedBox(
+                width: 330,
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: () {
+                    showMileageContainer();
+                  },
+                  onLongPress:(){ Navigator.push(context,MaterialPageRoute(builder: (context)=> AnimalManypage()),);},
+                  child: Text(
+                    '예상 탄소중립실천포인트 보기',
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                  ),
+                ),
+              ),
+        
+          ],
+        
+        ),
       ),
     );
   }
 }
+
+
+
 
 
 class CheckBoxUnit extends StatefulWidget {
