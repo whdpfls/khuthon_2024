@@ -2,8 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../app/app_router.dart';
-
 class CustomAppBar extends StatelessWidget {
   final String appBartitle;
   final String route;
@@ -12,6 +10,7 @@ class CustomAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(route);
     return Container(
       width: 410,
       height: 70,
@@ -19,6 +18,9 @@ class CustomAppBar extends StatelessWidget {
       color:Color(0xffebeedd),
       child: Row(
         children: [
+          SizedBox(
+            width: 10,
+          ),
           InkWell(
             child: SizedBox(
               width:30,
@@ -27,7 +29,7 @@ class CustomAppBar extends StatelessWidget {
               child: Icon(Icons.arrow_back_ios),
             ),
             onTap: (){
-              AppRouter.router.go(route);
+              context.go(route);
             },
           ),
           SizedBox(

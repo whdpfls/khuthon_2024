@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:khuthon_2024/features/homepage/homepage.dart';
 import 'package:khuthon_2024/features/widget/custom_appbar.dart';
 import 'package:khuthon_2024/main.dart';
 
@@ -22,7 +21,7 @@ class Guidepage extends StatelessWidget {
       child: Center(
         child: Column(
           children: [
-            CustomAppBar(appBartitle: guideAppbarTitle, route: Homepage.routeName),
+            // CustomAppBar(appBartitle: guideAppbarTitle, route:MyHomePage.routeName),
           ],
         ),
       ),
