@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Response
+from fastapi.responses import JSONResponse
 
 import json
 from datetime import datetime, timedelta
@@ -50,23 +51,25 @@ async def login(sign_in: SignIn, res: Response):
             response_json = json.dumps(response_dict)
             return response_json
         
-        response_dict = {
-            "type": "object",
-            "properties":{
+        
+        
+        expire_time = datetime.utcnow() + timedelta(minutes=30)
+        expire_time = expire_time.strftime("%a, %d %b %Y %H:%M:%S GMT")
+        
+        res = JSONResponse(status_code=200, content={
+            "type":"object",
+            "value":{
                 "id": login_result[0][0],
                 "user_name": login_result[0][1],
                 "user_id": login_result[0][2],
                 "user_pw": login_result[0][3]
             }
-        }
+        })
         
-        expire_time = datetime.utcnow() + timedelta(minutes=30)
-        expire_time = expire_time.strftime("%a, %d %b %Y %H:%M:%S GMT")
         res.set_cookie(key="id", value=str(login_result[0][0]), expires=expire_time)
         res.set_cookie(key="user_name", value=str(login_result[0][1]), expires=expire_time)
         
-        response_json = json.dumps(response_dict)
-        return response_json
+        return res
     except:
         response_dict = {
             "type": "string",
@@ -75,4 +78,22 @@ async def login(sign_in: SignIn, res: Response):
         response_json = json.dumps(response_dict)
     finally:
         return response_json
+
+# /login/fake
+@router.get("/fake")
+async def login(res: Response):
+    expire_time = datetime.utcnow() + timedelta(minutes=30)
+    expire_time = expire_time.strftime("%a, %d %b %Y %H:%M:%S GMT")
     
+    res = JSONResponse(status_code=200, content={
+            "type":"string",
+            "value":{
+                "id": 3,
+                "user_name": 'admin'
+            }
+        })
+    
+    res.set_cookie(key="id", value=3, expires=expire_time)
+    res.set_cookie(key="user_name", value="admin", expires=expire_time)
+        
+    return res

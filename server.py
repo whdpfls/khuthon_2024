@@ -2,7 +2,7 @@ from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 import socket
 
-from routes import guideline_api, login_api, mileleage_api, animalcatalog_api
+from routes import guideline_api, login_api, mileleage_api, animalcatalog_api, envactivity_api
 
 
 app = FastAPI()
@@ -20,10 +20,8 @@ app.add_middleware(
 app.include_router(guideline_api.router)
 app.include_router(login_api.router)
 app.include_router(mileleage_api.router)
-<<<<<<< HEAD
 app.include_router(animalcatalog_api.router)
-=======
->>>>>>> 705fa18a19adbe70f19f8ddbab56445413e7287a
+app.include_router(envactivity_api.router)
     
 
 
