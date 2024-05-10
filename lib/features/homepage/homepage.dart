@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:khuthon_2024/features/homepage/green_living.dart';
 import 'package:khuthon_2024/features/homepage/point_check.dart';
 
 class Homepage extends StatelessWidget {
@@ -43,6 +44,7 @@ class Homepage extends StatelessWidget {
               height: 100,
               child: ElevatedButton(
                 onPressed: () {
+                  Navigator.push(context,MaterialPageRoute(builder: (context)=> Greenliving()),);
                 },
                 child: Text(
                   '녹색생활실천활동',

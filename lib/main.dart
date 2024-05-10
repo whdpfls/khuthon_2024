@@ -63,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
           appBarTitle,
           style: TextStyle(
             fontSize: 18,
-            fontWeight: FontWeight.w800,
+            fontWeight: FontWeight.bold,
             color: Color(0xff294638),
           ),
         ),

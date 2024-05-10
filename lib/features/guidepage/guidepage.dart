@@ -21,7 +21,7 @@ class Guidepage extends StatelessWidget {
       child: Center(
         child: Column(
           children: [
-            // CustomAppBar(appBartitle: guideAppbarTitle, route:MyHomePage.routeName),
+
           ],
         ),
       ),

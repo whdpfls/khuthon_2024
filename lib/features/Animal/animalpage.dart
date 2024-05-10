@@ -36,8 +36,10 @@ class _AnimalpageState extends State<Animalpage> {
     Animal(name:"no.017 ????", image:"assets/animals/question.gif"),
     Animal(name:"no.018 ????", image:"assets/animals/question.gif"),
 
-
-
+    // Animal(name: "no.001 고양이", image: "assets/animals/cat.gif"),
+    // Animal(name: "no.002 홍학", image: "assets/animals/redbird.gif"),
+    // Animal(name: "no.003 돼지", image: "assets/animals/pig.png"),
+    // Animal(name: "no.004 렛서판다", image: "assets/animals/redpanda.png"),
     // Animal(name: "no.005 연못거북", image: "assets/animals/turtle.png"),
     // Animal(name: "no.006 수달", image: "assets/animals/soodal.gif"),
     // Animal(name: "no.007 큰부리새", image: "assets/animals/parrot.png"),
@@ -70,14 +72,17 @@ class _AnimalpageState extends State<Animalpage> {
             Padding(
               padding: EdgeInsets.all(15.0),
               child:  LinearPercentIndicator(
-                width: 370.0,
+                width: 320.0,
                 lineHeight: 14.0,
                 percent: 0.0,
                 center: Text(
                   "0.0%",
                   style: TextStyle(fontSize: 12.0),
                 ),
-                trailing: Icon(Icons.mood),
+                trailing: Text("70,000원", style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.w800,
+                ),),
                 linearStrokeCap: LinearStrokeCap.roundAll,
                 backgroundColor: Colors.grey,
                 progressColor: Colors.blue,

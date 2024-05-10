@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:khuthon_2024/features/Animal/animalManyver.dart';
+import 'package:khuthon_2024/features/Animal/animalpage.dart';
 
 class Convertpoint extends StatelessWidget {
   static const routename = '/convertpoint';
@@ -27,6 +29,26 @@ class Convertpoint extends StatelessWidget {
         backgroundColor: Color(0xffebeedd),
       ),
       backgroundColor: Color(0xffebeedd),
+
+      body: SizedBox(
+        width: 330,
+        height: 50,
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(context,MaterialPageRoute(builder: (context)=> AnimalManypage()),);
+          },
+          child: Text(
+            '마일리지 도감확인',
+            style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w800,
+                color: Colors.white),
+          ),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.green,
+          ),
+        ),
+      ),
 
 
     );
